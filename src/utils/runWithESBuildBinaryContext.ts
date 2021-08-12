@@ -8,36 +8,29 @@ import logger from '../logger';
 export const runWithESBuildBinaryContext = async <T>(run: () => Promise<T>) => {
   let binaryPath: string | undefined = undefined;
 
-  try {
-    const testBinaryPath = resolve(
-      __dirname,
-      '..',
-      '..',
-      'esbuild',
-      'esbuild.exe',
-    );
+  const nodeModulesDirs = [
+    ['..', '..'],
+    ['..', 'node_modules'],
+  ];
 
-    await access(testBinaryPath);
+  const binaryDirs = [['esbuild.exe'], ['bin', 'esbuild']];
 
-    binaryPath = testBinaryPath;
-  } catch {
-    /** do nothing */
-  }
+  for (const nodeModuleDir of nodeModulesDirs) {
+    for (const binaryDir of binaryDirs) {
+      const dir = [__dirname, ...nodeModuleDir, 'esbuild', ...binaryDir];
+      const testBinaryPath = resolve(...dir);
 
-  try {
-    const testBinaryPath = resolve(
-      __dirname,
-      '..',
-      'node_modules',
-      'esbuild',
-      'esbuild.exe',
-    );
+      try {
+        logger.info('Checking for binary in', testBinaryPath);
+        await access(testBinaryPath);
+        binaryPath = testBinaryPath;
+        break;
+      } catch {
+        // noop
+      }
+    }
 
-    await access(testBinaryPath);
-
-    binaryPath = testBinaryPath;
-  } catch {
-    /** do nothing */
+    if (binaryPath) break;
   }
 
   if (!binaryPath) {
