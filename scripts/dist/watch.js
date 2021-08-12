@@ -120,7 +120,7 @@ var import_chalk = __toModule(require("chalk"));
 var import_ora = __toModule(require("ora"));
 
 // package.json
-var name = "aqu";
+var name = "@alduino/aqu";
 
 // src/logger.ts
 var logger = {
@@ -148,15 +148,20 @@ var gracefulShutdownMessage = "\u2728 Shutting down gracefully";
 var gracefulShutdownDetails = "   Stopping esbuild service and closing watcher";
 
 // src/utils/gracefulShutdown.ts
+var NODE_EXIT_EVENTS = [
+  "SIGTERM",
+  "SIGINT",
+  "SIGQUIT",
+  "uncaughtException"
+];
 var gracefulShutdown = (cleanup) => {
   const onShutdown = () => {
     logger_default.info(gracefulShutdownMessage);
     logger_default.info(gracefulShutdownDetails);
     cleanup();
   };
-  process.on("SIGTERM", onShutdown);
-  process.on("SIGINT", onShutdown);
-  process.on("SIGQUIT", onShutdown);
+  NODE_EXIT_EVENTS.forEach((event) => process.on(event, onShutdown));
+  return () => NODE_EXIT_EVENTS.forEach((event) => process.removeListener(event, onShutdown));
 };
 
 // scripts/src/watch.ts
