@@ -21,7 +21,6 @@ export const runWithESBuildBinaryContext = async <T>(run: () => Promise<T>) => {
       const testBinaryPath = resolve(...dir);
 
       try {
-        logger.info('Checking for binary in', testBinaryPath);
         await access(testBinaryPath);
         binaryPath = testBinaryPath;
         break;
