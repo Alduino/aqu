@@ -21,9 +21,9 @@
     "aqu"
   ],
   "scripts": {
-    "build:scripts": "cross-env ESBUILD_BINARY_PATH=node_modules/esbuild/bin/esbuild node ./scripts/buildScripts.js",
-    "build": "cross-env ESBUILD_BINARY_PATH=node_modules/esbuild/bin/esbuild node ./scripts/dist/build.js",
-    "start": "cross-env ESBUILD_BINARY_PATH=node_modules/esbuild/bin/esbuild node ./scripts/dist/watch.js",
+    "build:scripts": "node -r ./scripts/load-env.js ./scripts/buildScripts.js",
+    "build": "node -r ./scripts/load-env.js ./scripts/dist/build.js",
+    "start": "node -r ./scripts/load-env.js ./scripts/dist/watch.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx,.json,.html,.md --fix",
     "test": "jest",
