@@ -31,13 +31,13 @@
   },
   "author": "Artiom Tretjakovas",
   "license": "MIT",
-  "homepage": "https://github.com/ArtiomTr/aqu#readme",
+  "homepage": "https://github.com/alduino/aqu#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArtiomTr/aqu.git"
+    "url": "git+https://github.com/alduino/aqu.git"
   },
   "bugs": {
-    "url": "https://github.com/ArtiomTr/aqu/issues"
+    "url": "https://github.com/alduino/aqu/issues"
   },
   "dependencies": {
     "@babel/preset-env": "^7.12.17",
